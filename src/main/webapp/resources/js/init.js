@@ -1,6 +1,15 @@
 
 // when document loaded
 $(document).ready(function() {
+	// init Navar Dropdown Menu
+	$('.dropdown-trigger').dropdown();
+	
+	// init carousel
+	$('.carousel.carousel-slider').carousel({
+	    fullWidth: true,
+	    indicators: true
+	  });
+	
 	// init sidenav
 	$('.sidenav').sidenav();
 
