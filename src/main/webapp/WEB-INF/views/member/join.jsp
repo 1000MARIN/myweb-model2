@@ -33,7 +33,7 @@
               <h5>회원가입</h5>
               <div class="divider" style="margin: 30px 0;"></div>
 
-              <form action="/member/joinPro.jsp" method="POST" id="frm" name="frm">
+              <form action="/memberJoinPro.do" method="POST" id="frm" name="frm">
                 <div class="row">
                   <div class="input-field col s12 m8 l9">
                     <i class="material-icons prefix">account_box</i>
