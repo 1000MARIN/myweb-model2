@@ -8,8 +8,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.controller.home.HomeAction;
+import com.example.controller.member.MemberJoinAction;
+import com.example.controller.member.MemberJoinProAcion;
+import com.example.controller.member.MemberLoginAction;
 
-// MVC(모델2) 			: Moedl-View-Controller 패턴으로 작성하는 방식
+
+// MVC(모델2) 			: Model-View-Controller 패턴으로 작성하는 방식
 
 // 컨트롤러 			: 뷰와 모델 사이에서 제어를 담당하는 클래스
 
@@ -37,33 +42,30 @@ public class MyDispatcherServlet extends HttpServlet {
 		System.out.println("contextPath : " + contextPath);				// "/myweb"
 																		// ""
 		
-		String command = requestURI.substring(contextPath.length() + 1);	
+		String command = requestURI.substring(contextPath.length());	
 		System.out.println("command : " + command);						// "/index.do"
 		
-		ActionForward forward = null;
 		
-		// 2. 요청 명령어에 해당하는 작업 처리하기
-		if (command.equals("/index.do")) {
-			
-			// 처리..
-			
-			// forwarding : 서버 실행흐름 내에서 jsp를 바로 실행하는 방식
-			forward = new ActionForward();
-			forward.setRedirect(false);
-			forward.setPath("index");
-			
-			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/index.jsp");
-			dispatcher.forward(request, response);
-			
-		} else if (command.equals("/memberJoin.do")) {
+		// 2. 명령어를 처리를 담당하는 해당 컨트롤러를 가져와서 실행하기
+		ActionForward forward = null;
+		Action action = null;
+		
+		ActionFactory actionFactory = ActionFactory.getInstance();
+		action = actionFactory.getAction(command); // 키에 해당하는 값이 없을때는 null을 리턴
+		
+		if (action != null) {
+			try {
+				forward = action.execute(request, response);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			
 		}
 		
 		
 		// 3. 작업 처리 후 사용자에게 알맞은 응답(화면 또는 데이터)을 보내기
 		// 이동방식 2가지: redirect (*.do) , forward (.jsp) 
-		if (forward != null) {
+		if (forward != null) { // redirect (*.do)
 			if (forward.isRedirect()) {
 				response.sendRedirect(forward.getPath()); // *.do 리다이렉트로 다시 요청 받음
 				
@@ -77,8 +79,8 @@ public class MyDispatcherServlet extends HttpServlet {
 				
 				
 			}
+			
 		}
-		
 		
 	} // end of service
 	
