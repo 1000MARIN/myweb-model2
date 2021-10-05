@@ -12,6 +12,18 @@
   <!-- Navbar area -->
   <jsp:include page="/WEB-INF/views/include/top.jsp" />
   <!-- end of Navbar area -->
+  
+  <div class="container section">
+  	
+	  <div class="carousel carousel-slider">
+	    <a class="carousel-item" href="#one!"><img src="/resources/images/kirby1.jpg"></a>
+	    <a class="carousel-item" href="#two!"><img src="/resources/images/kirby2.jpg"></a>
+	    <a class="carousel-item" href="#three!"><img src="/resources/images/kirby3.jpg"></a>
+	    <a class="carousel-item" href="#four!"><img src="/resources/images/kirby4.jpg"></a>
+	  </div>
+  </div>
+
+
 
 
   <div class="section no-pad-bot" id="index-banner">
@@ -80,6 +92,14 @@
 
   <!-- Scripts -->
   <jsp:include page="/WEB-INF/views/include/commonJs.jsp" />
+  
+  	<script>
+	  	$('.carousel').carousel();
+	
+	  	setInterval(function() {
+	  	    $('.carousel').carousel('next');
+	  	}, 3000);
+  	</script>
 
 </body>
 
