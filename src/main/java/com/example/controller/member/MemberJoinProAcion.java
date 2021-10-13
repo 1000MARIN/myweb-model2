@@ -1,5 +1,6 @@
 package com.example.controller.member;
 
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 
 import javax.servlet.http.HttpServletRequest;
@@ -47,12 +48,26 @@ public class MemberJoinProAcion implements Action {
 		// 회원가입 insert 처리하기
 		memberDAO.insert(memberVO);
 		
+		
+		// 리다이렉트 방식 1
 		// 폼 태그로 부터 사용자 입력값을 받아서 처리한 이후에 
 		// 응답을 줄때는 항상 리다이렉트 방식을 원함
-		ActionForward forward = new ActionForward();
-		forward.setRedirect(true);
-		forward.setPath("member/login");
+//		ActionForward forward = new ActionForward();
+//		forward.setRedirect(true);
+//		forward.setPath("member/login");
 		
+		// 리다이렉트 방식 2
+		// 자바스크립트 코드가 간단할 경우는 다음과 같이 처리 가능함.
+		response.setContentType("text/html; charset=UTF-8"); 
+		PrintWriter out = response.getWriter();
+		out.println("<script>");
+		out.println("	alert('회원가입 성공');");
+		out.println("	location.href = '/member/login.jsp';");
+		out.println("</script>");
+		out.flush();
+		// 자바스크립트 코드가 여러줄로 아주 많을 경우에는
+		// 별도의 jsp 파일로 만들어서 forwarding 방식으로
+		// 자바스크립트 실행문이 들어있는 해당 jsp 파일을 바로 실행하는 방식이 좋음.ㅇ
 		return null;
 	}
 
